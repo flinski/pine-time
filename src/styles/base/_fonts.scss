@@ -1,0 +1,18 @@
+@use '@/styles/helpers' as *;
+
+// &display=swap
+// &subset=cyrillic-ext
+
+// @include font-face('Kumbh Sans', '../assets/fonts/KumbhSans-Regular', 400, normal);
+
+// @font-face {
+// 	font-family: 'Roboto';
+// 	src: url('../assets/fonts/Roboto-Regular.woff2') format('woff2');
+// 	font-weight: 400;
+// 	font-style: normal;
+// 	font-display: swap;
+// }
+
+@include font-face('Inter', '../assets/fonts/Inter-Regular', 400, normal);
+@include font-face('Inter', '../assets/fonts/Inter-Medium', 500, normal);
+@include font-face('Inter', '../assets/fonts/Inter-SemiBold', 600, normal);

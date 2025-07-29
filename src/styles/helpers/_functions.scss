@@ -1,0 +1,28 @@
+@use 'sass:math';
+
+// calc(10px + (40 - 10) * ((100vw - 320px) / (1440 - 320)))
+@function fluid($max, $min, $maxWidth: 1440, $minWidth: 360) {
+  // convert to rem
+  $max: math.div($max, 16);
+  $min: math.div($min, 16);
+  $maxWidth: math.div($maxWidth, 16);
+  $minWidth: math.div($minWidth, 16);
+
+  // do calculations
+  $slope: math.div(($max - $min), ($maxWidth - $minWidth));
+  $yAxisIntersection: -$minWidth * $slope + $min;
+
+  @return clamp(#{$min * 1rem}, #{$yAxisIntersection * 1rem} + #{$slope * 100vw}, #{$max * 1rem});
+}
+
+@function to-rem($px) {
+  @return math.div($px, 16) + rem;
+}
+
+@function to-em($px, $current: 16) {
+  @return math.div($px, $current) + em;
+}
+
+@function to-pct($value, $total) {
+  @return math.div($value, $total) * 100%;
+}

@@ -1,0 +1,16 @@
+@use '@/styles/helpers' as *;
+
+:root {
+  color-scheme: dark;
+
+  --color-bg: hsl(160, 34%, 48%);
+  --color-text: hsl(0 0% 98%);
+  --color-dim: hsl(0 0% 98% / 0.2);
+  --color-dark: hsl(0 0% 0% / 0.5);
+
+  --font-family:
+    'Inter', system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji';
+
+  --transition-duration: 0.1s;
+}
