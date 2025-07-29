@@ -1,0 +1,25 @@
+@use '@/styles/helpers' as *;
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: to-rem(25);
+
+  button {
+    @include square(40);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+
+    svg {
+      @include square(24);
+    }
+  }
+}
+
+.resetButton,
+.nextButton {
+  color: var(--color-dim);
+}
