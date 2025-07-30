@@ -17,7 +17,9 @@ export default function Controls() {
     dispatch({ type: 'timer/toggle' })
   }
 
-  const handleNextSession = () => {}
+  const handleNextSession = () => {
+    dispatch({ type: 'timer/complete' })
+  }
 
   return (
     <div className={styles.controls}>

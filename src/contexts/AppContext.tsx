@@ -17,7 +17,6 @@ type ActionType =
   | { type: 'timer/complete' }
   | { type: 'timer/decrease' }
   | { type: 'timer/reset' }
-  | { type: 'timer/next' }
 
 const AppContext = createContext<StateType | null>(null)
 const AppDispatchContext = createContext<Dispatch<ActionType> | null>(null)
