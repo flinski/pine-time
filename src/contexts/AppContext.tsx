@@ -2,15 +2,16 @@ import { createContext, useContext, useReducer, type Dispatch, type ReactNode } 
 
 type StateType = {
   timeLeft: number
+  focusTime: number
+  breakTime: number
+  restTime: number
   sessions: number
   isActive: boolean
   isCompleted: boolean
   mode: 'focus' | 'break' | 'rest'
 }
 
-type ActionType = {
-  type: 'timer/toggleTimer'
-}
+type ActionType = { type: 'timer/toggle' } | { type: 'timer/decrease' }
 
 const AppContext = createContext<StateType | null>(null)
 const AppDispatchContext = createContext<Dispatch<ActionType> | null>(null)
@@ -36,7 +37,10 @@ export function useAppDispatch() {
 }
 
 const initialState: StateType = {
-  timeLeft: 25 * 60,
+  timeLeft: 1 * 60,
+  focusTime: 1 * 60,
+  breakTime: 5 * 60,
+  restTime: 15 * 60,
   sessions: 0,
   isActive: false,
   isCompleted: false,
@@ -45,11 +49,17 @@ const initialState: StateType = {
 
 function reducer(state: StateType, action: ActionType) {
   switch (action.type) {
-    case 'timer/toggleTimer': {
+    case 'timer/toggle': {
       return {
         ...state,
         isCompleted: false,
         isActive: !state.isActive,
+      }
+    }
+    case 'timer/decrease': {
+      return {
+        ...state,
+        timeLeft: state.timeLeft - 1,
       }
     }
     default: {

@@ -10,7 +10,7 @@ export default function Controls() {
   const dispatch = useAppDispatch()
 
   const handleToggleTimer = () => {
-    dispatch({ type: 'timer/toggleTimer' })
+    dispatch({ type: 'timer/toggle' })
   }
 
   return (
