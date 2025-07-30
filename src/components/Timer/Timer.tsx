@@ -5,7 +5,7 @@ export default function Timer() {
     <div className={styles.timer}>
       <div className={styles.info}>
         <div className={styles.title}>Focus</div>
-        <div className={styles.countdown}>25 00</div>
+        <div className={styles.countdown}>15 24</div>
         <div>Sessions</div>
       </div>
       <svg width="200" height="200" viewBox="0 0 200 200">
