@@ -12,6 +12,7 @@
 
     circle {
       stroke-width: to-rem(8);
+      transition: stroke-dashoffset 1s ease-in-out;
     }
 
     circle:nth-child(1) {

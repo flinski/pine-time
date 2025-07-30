@@ -4,24 +4,27 @@ import { formatTime } from '@/utils/helpers'
 import styles from './Timer.module.scss'
 
 export default function Timer() {
-  const { timeLeft, isActive, mode, focusTime } = useAppState()
+  const { timeLeft, isActive, mode, focusTime, breakTime, restTime } = useAppState()
   const dispatch = useAppDispatch()
 
-  const timeProgress = timeLeft / focusTime
-  const strokeDasharray = 565
-  const strokeDashoffset = Math.floor(timeProgress * strokeDasharray)
+  const modeTime = mode === 'focus' ? focusTime : mode === 'break' ? breakTime : restTime
+  const timeProgress = timeLeft / modeTime
+  const strokeDasharray = 2 * Math.PI * 90
+  const strokeDashoffset = timeProgress * strokeDasharray
 
   useEffect(() => {
     let intervalId = undefined
 
-    if (isActive) {
+    if (isActive && timeLeft >= 0) {
       intervalId = setInterval(() => {
         dispatch({ type: 'timer/decrease' })
       }, 1000)
+    } else if (isActive && timeLeft < 0) {
+      dispatch({ type: 'timer/complete' })
     }
 
     return () => clearInterval(intervalId)
-  }, [isActive, dispatch])
+  }, [isActive, timeLeft, dispatch])
 
   return (
     <div className={styles.timer}>
@@ -40,22 +43,19 @@ export default function Timer() {
           strokeWidth="8"
           strokeLinecap="round"
         />
-
-        {timeProgress !== 1 && (
-          <circle
-            id="progressCircle"
-            cx="100"
-            cy="100"
-            r="90"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="8"
-            strokeLinecap="round"
-            strokeDasharray={strokeDasharray}
-            strokeDashoffset={strokeDashoffset}
-            transform="rotate(-90 100 100)"
-          />
-        )}
+        <circle
+          id="progressCircle"
+          cx="100"
+          cy="100"
+          r="90"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="8"
+          strokeLinecap="round"
+          strokeDasharray={strokeDasharray}
+          strokeDashoffset={strokeDashoffset}
+          transform="rotate(-90 100 100)"
+        ></circle>
       </svg>
     </div>
   )

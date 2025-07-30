@@ -11,6 +11,7 @@ export default function Controls() {
 
   const handleToggleTimer = () => {
     dispatch({ type: 'timer/toggle' })
+    dispatch({ type: 'timer/decrease' })
   }
 
   return (

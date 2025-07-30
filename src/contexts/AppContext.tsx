@@ -6,12 +6,13 @@ type StateType = {
   breakTime: number
   restTime: number
   sessions: number
+  sessionsCycle: number
   isActive: boolean
   isCompleted: boolean
   mode: 'focus' | 'break' | 'rest'
 }
 
-type ActionType = { type: 'timer/toggle' } | { type: 'timer/decrease' }
+type ActionType = { type: 'timer/toggle' } | { type: 'timer/complete' } | { type: 'timer/decrease' }
 
 const AppContext = createContext<StateType | null>(null)
 const AppDispatchContext = createContext<Dispatch<ActionType> | null>(null)
@@ -37,11 +38,12 @@ export function useAppDispatch() {
 }
 
 const initialState: StateType = {
-  timeLeft: 1 * 60,
-  focusTime: 1 * 60,
-  breakTime: 5 * 60,
-  restTime: 15 * 60,
-  sessions: 0,
+  timeLeft: 10,
+  focusTime: 10,
+  breakTime: 3,
+  restTime: 5,
+  sessions: 1,
+  sessionsCycle: 4,
   isActive: false,
   isCompleted: false,
   mode: 'focus',
@@ -54,6 +56,33 @@ function reducer(state: StateType, action: ActionType) {
         ...state,
         isCompleted: false,
         isActive: !state.isActive,
+      }
+    }
+    case 'timer/complete': {
+      let newMode: 'focus' | 'break' | 'rest'
+      let newTimeLeft
+      const newSessions = state.sessions + 1 > state.sessionsCycle ? 1 : state.sessions + 1
+
+      if (state.mode === 'focus') {
+        if (newSessions % state.sessionsCycle === 0) {
+          newMode = 'rest'
+          newTimeLeft = state.restTime
+        } else {
+          newMode = 'break'
+          newTimeLeft = state.breakTime
+        }
+      } else {
+        newMode = 'focus'
+        newTimeLeft = state.focusTime
+      }
+
+      return {
+        ...state,
+        isCompleted: true,
+        isActive: false,
+        mode: newMode,
+        timeLeft: newTimeLeft,
+        sessions: newSessions,
       }
     }
     case 'timer/decrease': {
