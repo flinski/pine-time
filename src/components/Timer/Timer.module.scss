@@ -44,3 +44,21 @@
   font-weight: 600;
   font-variant-numeric: tabular-nums;
 }
+
+.sessions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: to-rem(4);
+  padding: to-rem(4);
+}
+
+.session {
+  @include square(8);
+  background-color: var(--color-text-dim);
+  border-radius: 50%;
+
+  &:global(.completed) {
+    background-color: var(--color-text);
+  }
+}

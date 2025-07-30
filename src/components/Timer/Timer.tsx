@@ -4,7 +4,8 @@ import { formatTime } from '@/utils/helpers'
 import styles from './Timer.module.scss'
 
 export default function Timer() {
-  const { timeLeft, isActive, mode, focusTime, breakTime, restTime } = useAppState()
+  const { timeLeft, isActive, mode, sessions, sessionsCycle, focusTime, breakTime, restTime } =
+    useAppState()
   const dispatch = useAppDispatch()
 
   const modeTime = mode === 'focus' ? focusTime : mode === 'break' ? breakTime : restTime
@@ -31,7 +32,11 @@ export default function Timer() {
       <div className={styles.info}>
         <div className={styles.title}>{mode}</div>
         <div className={styles.countdown}>{formatTime(timeLeft)}</div>
-        <div>Sessions</div>
+        <div className={styles.sessions}>
+          {Array.from({ length: sessionsCycle }, () => '').map((_, index) => (
+            <div className={`${styles.session} ${index < sessions ? 'completed' : ''}`}>{_}</div>
+          ))}
+        </div>
       </div>
       <svg width="200" height="200" viewBox="0 0 200 200">
         <circle
