@@ -9,20 +9,25 @@ export default function Controls() {
   const { isActive } = useAppState()
   const dispatch = useAppDispatch()
 
+  const handleResetTimer = () => {
+    dispatch({ type: 'timer/reset' })
+  }
+
   const handleToggleTimer = () => {
     dispatch({ type: 'timer/toggle' })
-    dispatch({ type: 'timer/decrease' })
   }
+
+  const handleNextSession = () => {}
 
   return (
     <div className={styles.controls}>
-      <button className={styles.resetButton}>
+      <button className={styles.resetButton} onClick={handleResetTimer}>
         <ResetIcon />
       </button>
       <button className={styles.playPauseButton} onClick={handleToggleTimer}>
         {isActive ? <PauseIcon /> : <PlayIcon />}
       </button>
-      <button className={styles.nextButton}>
+      <button className={styles.nextButton} onClick={handleNextSession}>
         <NextIcon />
       </button>
     </div>

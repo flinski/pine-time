@@ -31,7 +31,7 @@ export default function Timer() {
     <div className={styles.timer}>
       <div className={styles.info}>
         <div className={styles.title}>{mode}</div>
-        <div className={styles.countdown}>{formatTime(timeLeft)}</div>
+        <div className={styles.countdown}>{timeLeft < 0 ? '00 00' : formatTime(timeLeft)}</div>
         <div className={styles.sessions}>
           {Array.from({ length: sessionsCycle }, () => '').map((_, index) => (
             <div className={`${styles.session} ${index < sessions ? 'completed' : ''}`}>{_}</div>

@@ -12,7 +12,12 @@ type StateType = {
   mode: 'focus' | 'break' | 'rest'
 }
 
-type ActionType = { type: 'timer/toggle' } | { type: 'timer/complete' } | { type: 'timer/decrease' }
+type ActionType =
+  | { type: 'timer/toggle' }
+  | { type: 'timer/complete' }
+  | { type: 'timer/decrease' }
+  | { type: 'timer/reset' }
+  | { type: 'timer/next' }
 
 const AppContext = createContext<StateType | null>(null)
 const AppDispatchContext = createContext<Dispatch<ActionType> | null>(null)
@@ -54,8 +59,8 @@ function reducer(state: StateType, action: ActionType) {
     case 'timer/toggle': {
       return {
         ...state,
-        isCompleted: false,
         isActive: !state.isActive,
+        isCompleted: false,
       }
     }
     case 'timer/complete': {
@@ -78,8 +83,8 @@ function reducer(state: StateType, action: ActionType) {
 
       return {
         ...state,
-        isCompleted: true,
         isActive: false,
+        isCompleted: true,
         mode: newMode,
         timeLeft: newTimeLeft,
         sessions: newSessions,
@@ -89,6 +94,19 @@ function reducer(state: StateType, action: ActionType) {
       return {
         ...state,
         timeLeft: state.timeLeft - 1,
+      }
+    }
+    case 'timer/reset': {
+      return {
+        ...state,
+        timeLeft:
+          state.mode === 'focus'
+            ? state.focusTime
+            : state.mode === 'break'
+              ? state.breakTime
+              : state.restTime,
+        isActive: false,
+        isCompleted: false,
       }
     }
     default: {
