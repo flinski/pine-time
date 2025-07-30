@@ -1,0 +1,40 @@
+@use '@/styles/helpers' as *;
+
+.panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  column-gap: to-rem(4);
+
+  svg {
+    @include square(18);
+  }
+
+  span {
+    font-size: to-rem(16);
+    font-weight: 500;
+    letter-spacing: to-em(1);
+  }
+}
+
+.settingsButton {
+  @include square(40);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-dim);
+  background-color: transparent;
+
+  @include hover {
+    color: var(--color-text);
+  }
+
+  svg {
+    @include square(24);
+  }
+}

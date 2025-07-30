@@ -36,6 +36,7 @@
 }
 
 .title {
+  font-size: to-rem(14);
   text-transform: uppercase;
 }
 
@@ -55,8 +56,9 @@
 
 .session {
   @include square(8);
+  flex-shrink: 0;
   background-color: var(--color-text-dim);
-  border-radius: 50%;
+  border-radius: to-rem(4);
 
   &:global(.completed) {
     background-color: var(--color-text);
