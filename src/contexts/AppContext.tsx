@@ -27,6 +27,7 @@ type ActionType =
         mode: 'focus' | 'break' | 'rest'
       }
     }
+  | { type: 'settings/setSessionsCycle'; payload: number }
 
 const AppContext = createContext<StateType | null>(null)
 const AppDispatchContext = createContext<Dispatch<ActionType> | null>(null)
@@ -152,6 +153,12 @@ function reducer(state: StateType, action: ActionType) {
       return {
         ...state,
         [mode]: action.payload.value,
+      }
+    }
+    case 'settings/setSessionsCycle': {
+      return {
+        ...state,
+        sessionsCycle: action.payload,
       }
     }
     default: {

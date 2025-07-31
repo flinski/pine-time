@@ -48,10 +48,11 @@
 
 .sessions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  column-gap: to-rem(4);
+  gap: to-rem(4);
   padding: to-rem(4);
+  max-width: to-rem(102);
 }
 
 .session {

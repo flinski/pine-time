@@ -4,7 +4,7 @@ import styles from './Settings.module.scss'
 import { secsToMins } from '@/utils/helpers'
 
 export default function Settings() {
-  const { focusTime, breakTime, restTime } = useAppState()
+  const { focusTime, breakTime, restTime, sessionsCycle } = useAppState()
   const dispatch = useAppDispatch()
 
   const handleCloseSettings = () => {
@@ -22,6 +22,11 @@ export default function Settings() {
     dispatch({ type: 'timer/reset' })
   }
 
+  const handleChangeSessions = (event: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: 'settings/setSessionsCycle', payload: Number(event.target.value) })
+    dispatch({ type: 'timer/reset' })
+  }
+
   return (
     <div className={styles.settings}>
       <div className={styles.panel}>
@@ -35,10 +40,12 @@ export default function Settings() {
             Focus
           </label>
           <input
-            type="text"
+            type="number"
             id="focus"
             className={styles.input}
-            value={secsToMins(focusTime)}
+            value={
+              secsToMins(focusTime) <= 0 || secsToMins(focusTime) > 99 ? '' : secsToMins(focusTime)
+            }
             onChange={(event) => handleChangeTime(event, 'focus')}
           />
         </div>
@@ -47,10 +54,12 @@ export default function Settings() {
             Break
           </label>
           <input
-            type="text"
+            type="number"
             id="break"
             className={styles.input}
-            value={secsToMins(breakTime)}
+            value={
+              secsToMins(breakTime) <= 0 || secsToMins(breakTime) > 99 ? '' : secsToMins(breakTime)
+            }
             onChange={(event) => handleChangeTime(event, 'break')}
           />
         </div>
@@ -59,11 +68,25 @@ export default function Settings() {
             Rest
           </label>
           <input
-            type="text"
+            type="number"
             id="rest"
             className={styles.input}
-            value={secsToMins(restTime)}
+            value={
+              secsToMins(restTime) <= 0 || secsToMins(restTime) > 99 ? '' : secsToMins(restTime)
+            }
             onChange={(event) => handleChangeTime(event, 'rest')}
+          />
+        </div>
+        <div className={styles.field}>
+          <label htmlFor="sessions" className={styles.label}>
+            Sessions
+          </label>
+          <input
+            type="number"
+            id="sessions"
+            className={styles.input}
+            value={sessionsCycle <= 0 || sessionsCycle > 32 ? '' : sessionsCycle}
+            onChange={handleChangeSessions}
           />
         </div>
       </div>
