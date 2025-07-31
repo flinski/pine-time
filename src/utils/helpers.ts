@@ -7,3 +7,7 @@ export function formatTime(secs: number) {
 
   return `${formattedMinutes} ${formattedSeconds}`
 }
+
+export function secsToMins(secs: number) {
+  return Math.floor(secs / 60)
+}

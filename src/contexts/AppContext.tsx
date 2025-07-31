@@ -9,6 +9,7 @@ type StateType = {
   sessionsCycle: number
   isActive: boolean
   isCompleted: boolean
+  areSettingsOpen: boolean
   mode: 'focus' | 'break' | 'rest'
 }
 
@@ -17,6 +18,15 @@ type ActionType =
   | { type: 'timer/complete' }
   | { type: 'timer/decrease' }
   | { type: 'timer/reset' }
+  | { type: 'settings/open' }
+  | { type: 'settings/close' }
+  | {
+      type: 'settings/changeModeTime'
+      payload: {
+        value: number
+        mode: 'focus' | 'break' | 'rest'
+      }
+    }
 
 const AppContext = createContext<StateType | null>(null)
 const AppDispatchContext = createContext<Dispatch<ActionType> | null>(null)
@@ -42,14 +52,15 @@ export function useAppDispatch() {
 }
 
 const initialState: StateType = {
-  timeLeft: 10,
-  focusTime: 10,
-  breakTime: 3,
-  restTime: 5,
+  timeLeft: 25 * 60,
+  focusTime: 25 * 60,
+  breakTime: 5 * 60,
+  restTime: 15 * 60,
   sessions: 1,
   sessionsCycle: 4,
   isActive: false,
   isCompleted: false,
+  areSettingsOpen: false,
   mode: 'focus',
 }
 
@@ -106,6 +117,41 @@ function reducer(state: StateType, action: ActionType) {
               : state.restTime,
         isActive: false,
         isCompleted: false,
+      }
+    }
+    case 'settings/open': {
+      return {
+        ...state,
+        areSettingsOpen: true,
+      }
+    }
+    case 'settings/close': {
+      return {
+        ...state,
+        areSettingsOpen: false,
+      }
+    }
+    case 'settings/changeModeTime': {
+      let mode
+
+      switch (action.payload.mode) {
+        case 'focus': {
+          mode = 'focusTime'
+          break
+        }
+        case 'break': {
+          mode = 'breakTime'
+          break
+        }
+        case 'rest': {
+          mode = 'restTime'
+          break
+        }
+      }
+
+      return {
+        ...state,
+        [mode]: action.payload.value,
       }
     }
     default: {

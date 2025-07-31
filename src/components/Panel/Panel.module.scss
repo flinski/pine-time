@@ -13,11 +13,12 @@
 
   svg {
     @include square(18);
+    color: #8fc0a9;
   }
 
   span {
     font-size: to-rem(16);
-    font-weight: 500;
+    font-weight: 400;
     letter-spacing: to-em(1);
   }
 }
