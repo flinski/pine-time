@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer, type Dispatch, type ReactNode } from 'react'
+import { defaultSettings, LS_KEY, type SettingsType } from '@/constants/config'
 
 type StateType = {
   timeLeft: number
@@ -52,13 +53,17 @@ export function useAppDispatch() {
   return dispatch
 }
 
+const settings: SettingsType = JSON.parse(
+  localStorage.getItem(LS_KEY) ?? JSON.stringify(defaultSettings)
+)
+
 const initialState: StateType = {
-  timeLeft: 25 * 60,
-  focusTime: 25 * 60,
-  breakTime: 5 * 60,
-  restTime: 15 * 60,
+  timeLeft: settings.focusTime,
+  focusTime: settings.focusTime,
+  breakTime: settings.breakTime,
+  restTime: settings.restTime,
   sessions: 1,
-  sessionsCycle: 4,
+  sessionsCycle: settings.sessionsCycle,
   isActive: false,
   isCompleted: false,
   areSettingsOpen: false,

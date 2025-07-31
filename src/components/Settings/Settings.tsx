@@ -1,11 +1,24 @@
+import { useEffect } from 'react'
 import { useAppDispatch, useAppState } from '@/contexts/AppContext'
+import { LS_KEY } from '@/constants/config'
+import { secsToMins } from '@/utils/helpers'
 import BackIcon from '@/components/icons/BackIcon'
 import styles from './Settings.module.scss'
-import { secsToMins } from '@/utils/helpers'
 
 export default function Settings() {
   const { focusTime, breakTime, restTime, sessionsCycle } = useAppState()
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    const settings = {
+      focusTime,
+      breakTime,
+      restTime,
+      sessionsCycle,
+    }
+
+    localStorage.setItem(LS_KEY, JSON.stringify(settings))
+  }, [focusTime, breakTime, restTime, sessionsCycle])
 
   const handleCloseSettings = () => {
     dispatch({ type: 'settings/close' })
